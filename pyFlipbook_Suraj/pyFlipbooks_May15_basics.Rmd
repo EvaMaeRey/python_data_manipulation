@@ -1,7 +1,7 @@
 ---
 title: "A Python Flipbook"
 subtitle: "With {flipbookr} and xaringan"
-author: "Gina Reynolds, March 2020"
+author: "Gina Reynolds & Suraj, March 2020"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -51,8 +51,8 @@ import pandas as pd
 ```{python hello_python, include=FALSE}
 d = [2,3,4]
 d
-d = ["a","b","c"]
-d
+e = ["a","b","c"]
+e
 ```
 
 
