@@ -1,0 +1,9 @@
+---
+title: "Python Flipbooks page"
+author: "Evangeline Reynolds & Suraj Thapa"
+date: "5/15/2020"
+output: html_document
+---
+
+- [plots](plots.html)
+- [basic manipulation](basics.html)
