@@ -13,8 +13,7 @@ output:
       countIncrementalSlides: false
 ---
 
-
-This is pretty experimental work.  The python "parser" (basically no parsing) means there are strong contraints on code.  Each new line must yeild complete code statement...  
+  
 
 
 ```{r setup, include = F}
@@ -23,20 +22,13 @@ This is pretty experimental work.  The python "parser" (basically no parsing) me
 knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
                       comment = "", cache = F, fig.retina = 3, eval = F)
 library(flipbookr)
-library(tidyverse)
+#library(tidyverse)
 library(reticulate)
 ```
 
-
-<!-- This next chunk is just for the developer -- working w/ local code -->
-
-```{r just_for_evamaerey, cache = FALSE, echo = FALSE, eval = T}
-try(source("../../../../../R/base_parse_reveal_xaringan.R"))
-try(source("../../../../../R/mini.R"))
-```
-
-
 ---
+
+
 
 `r chunk_reveal("import_packages", lang = "python")`
 
@@ -44,19 +36,20 @@ try(source("../../../../../R/mini.R"))
 import numpy as np
 import pandas as pd
 ```
----
 
-`r chunk_reveal("hello_python", lang = "python")`
+
+`r chunk_reveal("hello_python", lang = "python", break_type=1)`
 
 ```{python hello_python, include=FALSE}
 d = [2,3,4]
 d
 e = ["a","b","c"]
 e
+
 ```
 
 
 
 ```{css, eval = TRUE, echo = FALSE}
-.remark-code{line-height: 1.5; font-size: 100%}
+.remark-code{line-height: 1.5; font-size: 75%}
 ```

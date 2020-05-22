@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>A Python Flipbook</title>
+    <title>PyFlipbook for reshapes</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Gina Reynolds &amp; Suraj, March 2020" />
+    <meta name="author" content="Gina Reynolds &amp; Suraj Thapa, May 2020" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
@@ -12,21 +12,19 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# A Python Flipbook
+# PyFlipbook for reshapes
 ## With {flipbookr} and xaringan
-### Gina Reynolds &amp; Suraj, March 2020
+### Gina Reynolds &amp; Suraj Thapa, May 2020
 
 ---
 
 
-  
 
 
 
 
 ---
-
-
+# Import required packages
 
 class: split-40
 count: false
@@ -61,9 +59,827 @@ import numpy as np
 
 
 ---
+# Reshapes in python
+- We are going to learn various ways to reshape using python. They are:
+
+## 1. Melt
+## 2. Stack and Unstack
+## 3. pivot
+
+---
+## Melt
+- Think melt as shaping wide format to long format
+- Create wide dataframe
+---
+
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+*df_wide = pd.DataFrame(
+*{"student": ["Andy", "Bernie", "Cindy", "Deb"],
+*"school": ["Z", "Y", "Z", "Y"],
+*"english": [10, 100, 1000, 10000], # eng grades
+*"math": [20, 200, 2000, 20000], # math grades
+*"physics": [30, 300, 3000, 30000] # physics grades
+*})
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide = pd.DataFrame(  
+{"student": ["Andy", "Bernie", "Cindy", "Deb"],  
+"school": ["Z", "Y", "Z", "Y"],  
+"english": [10, 100, 1000, 10000], # eng grades  
+"math": [20, 200, 2000, 20000], # math grades  
+"physics": [30, 300, 3000, 30000] # physics grades  
+})  
+*df_wide
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide = pd.DataFrame(  
+{"student": ["Andy", "Bernie", "Cindy", "Deb"],  
+"school": ["Z", "Y", "Z", "Y"],  
+"english": [10, 100, 1000, 10000], # eng grades  
+"math": [20, 200, 2000, 20000], # math grades  
+"physics": [30, 300, 3000, 30000] # physics grades  
+})  
+df_wide  
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+]]
+
+
+
+---
+### Melt example 1.i
+- We are using only one column i.e. student
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+*df_wide
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+*df_wide.melt(id_vars=['student']).head(10)
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+8    Andy  physics     30
+9  Bernie  physics    300
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+df_wide.melt(id_vars=['student']).head(10)  
+
+*df_wide.melt(id_vars=['student'],
+*var_name="previous_columns").head()
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+8    Andy  physics     30
+9  Bernie  physics    300
+```
+
+```
+  student previous_columns  value
+0    Andy          english     10
+1  Bernie          english    100
+2   Cindy          english   1000
+3     Deb          english  10000
+4    Andy             math     20
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+df_wide.melt(id_vars=['student']).head(10)  
+
+df_wide.melt(id_vars=['student'],  
+var_name="previous_columns").head()  
+
+*df_wide.melt(id_vars=['student'],
+*var_name="previous_columns",
+*value_name="values_for_columns")
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+8    Andy  physics     30
+9  Bernie  physics    300
+```
+
+```
+  student previous_columns  value
+0    Andy          english     10
+1  Bernie          english    100
+2   Cindy          english   1000
+3     Deb          english  10000
+4    Andy             math     20
+```
+
+```
+   student previous_columns values_for_columns
+0     Andy          english                 10
+1   Bernie          english                100
+2    Cindy          english               1000
+3      Deb          english              10000
+4     Andy             math                 20
+5   Bernie             math                200
+6    Cindy             math               2000
+7      Deb             math              20000
+8     Andy          physics                 30
+9   Bernie          physics                300
+10   Cindy          physics               3000
+11     Deb          physics              30000
+12    Andy           school                  Z
+13  Bernie           school                  Y
+14   Cindy           school                  Z
+15     Deb           school                  Y
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+df_wide.melt(id_vars=['student']).head(10)  
+
+df_wide.melt(id_vars=['student'],  
+var_name="previous_columns").head()  
+
+df_wide.melt(id_vars=['student'],  
+var_name="previous_columns",  
+value_name="values_for_columns")  
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+8    Andy  physics     30
+9  Bernie  physics    300
+```
+
+```
+  student previous_columns  value
+0    Andy          english     10
+1  Bernie          english    100
+2   Cindy          english   1000
+3     Deb          english  10000
+4    Andy             math     20
+```
+
+```
+   student previous_columns values_for_columns
+0     Andy          english                 10
+1   Bernie          english                100
+2    Cindy          english               1000
+3      Deb          english              10000
+4     Andy             math                 20
+5   Bernie             math                200
+6    Cindy             math               2000
+7      Deb             math              20000
+8     Andy          physics                 30
+9   Bernie          physics                300
+10   Cindy          physics               3000
+11     Deb          physics              30000
+12    Andy           school                  Z
+13  Bernie           school                  Y
+14   Cindy           school                  Z
+15     Deb           school                  Y
+```
+]]
+
+
+
+---
+### Melt example 1.ii
+- We can use two or more columns
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+*df_wide
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+*df_wide.melt(id_vars=['student', 'school'],
+*var_name="previous_columns")
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school previous_columns  value
+0     Andy      Z          english     10
+1   Bernie      Y          english    100
+2    Cindy      Z          english   1000
+3      Deb      Y          english  10000
+4     Andy      Z             math     20
+5   Bernie      Y             math    200
+6    Cindy      Z             math   2000
+7      Deb      Y             math  20000
+8     Andy      Z          physics     30
+9   Bernie      Y          physics    300
+10   Cindy      Z          physics   3000
+11     Deb      Y          physics  30000
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+df_wide.melt(id_vars=['student', 'school'],  
+var_name="previous_columns")  
+
+*df_wide.melt(id_vars=['student', 'school'],
+*var_name="previous_columns", #label variable name
+*value_name="values_for_columns") #label value name
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school previous_columns  value
+0     Andy      Z          english     10
+1   Bernie      Y          english    100
+2    Cindy      Z          english   1000
+3      Deb      Y          english  10000
+4     Andy      Z             math     20
+5   Bernie      Y             math    200
+6    Cindy      Z             math   2000
+7      Deb      Y             math  20000
+8     Andy      Z          physics     30
+9   Bernie      Y          physics    300
+10   Cindy      Z          physics   3000
+11     Deb      Y          physics  30000
+```
+
+```
+   student school previous_columns  values_for_columns
+0     Andy      Z          english                  10
+1   Bernie      Y          english                 100
+2    Cindy      Z          english                1000
+3      Deb      Y          english               10000
+4     Andy      Z             math                  20
+5   Bernie      Y             math                 200
+6    Cindy      Z             math                2000
+7      Deb      Y             math               20000
+8     Andy      Z          physics                  30
+9   Bernie      Y          physics                 300
+10   Cindy      Z          physics                3000
+11     Deb      Y          physics               30000
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide  
+
+df_wide.melt(id_vars=['student', 'school'],  
+var_name="previous_columns")  
+
+df_wide.melt(id_vars=['student', 'school'],  
+var_name="previous_columns", #label variable name  
+value_name="values_for_columns") #label value name  
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school previous_columns  value
+0     Andy      Z          english     10
+1   Bernie      Y          english    100
+2    Cindy      Z          english   1000
+3      Deb      Y          english  10000
+4     Andy      Z             math     20
+5   Bernie      Y             math    200
+6    Cindy      Z             math   2000
+7      Deb      Y             math  20000
+8     Andy      Z          physics     30
+9   Bernie      Y          physics    300
+10   Cindy      Z          physics   3000
+11     Deb      Y          physics  30000
+```
+
+```
+   student school previous_columns  values_for_columns
+0     Andy      Z          english                  10
+1   Bernie      Y          english                 100
+2    Cindy      Z          english                1000
+3      Deb      Y          english               10000
+4     Andy      Z             math                  20
+5   Bernie      Y             math                 200
+6    Cindy      Z             math                2000
+7      Deb      Y             math               20000
+8     Andy      Z          physics                  30
+9   Bernie      Y          physics                 300
+10   Cindy      Z          physics                3000
+11     Deb      Y          physics               30000
+```
+]]
+
+
+
+---
+### Melt example 2.i
+- We can select values as well
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+*df_wide #Original wide data
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide #Original wide data  
+*df_wide.melt(id_vars=['student', 'school'])
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school variable  value
+0     Andy      Z  english     10
+1   Bernie      Y  english    100
+2    Cindy      Z  english   1000
+3      Deb      Y  english  10000
+4     Andy      Z     math     20
+5   Bernie      Y     math    200
+6    Cindy      Z     math   2000
+7      Deb      Y     math  20000
+8     Andy      Z  physics     30
+9   Bernie      Y  physics    300
+10   Cindy      Z  physics   3000
+11     Deb      Y  physics  30000
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide #Original wide data  
+df_wide.melt(id_vars=['student', 'school'])  
+
+*df_wide.melt(id_vars='student',
+*value_vars=["english", "math"])
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school variable  value
+0     Andy      Z  english     10
+1   Bernie      Y  english    100
+2    Cindy      Z  english   1000
+3      Deb      Y  english  10000
+4     Andy      Z     math     20
+5   Bernie      Y     math    200
+6    Cindy      Z     math   2000
+7      Deb      Y     math  20000
+8     Andy      Z  physics     30
+9   Bernie      Y  physics    300
+10   Cindy      Z  physics   3000
+11     Deb      Y  physics  30000
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide #Original wide data  
+df_wide.melt(id_vars=['student', 'school'])  
+
+df_wide.melt(id_vars='student',  
+value_vars=["english", "math"])  
+
+*df_wide.melt(id_vars='student',
+*value_vars=["english", "math"],
+*var_name="Class", #label variable name
+*value_name="Grades") #label value name
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school variable  value
+0     Andy      Z  english     10
+1   Bernie      Y  english    100
+2    Cindy      Z  english   1000
+3      Deb      Y  english  10000
+4     Andy      Z     math     20
+5   Bernie      Y     math    200
+6    Cindy      Z     math   2000
+7      Deb      Y     math  20000
+8     Andy      Z  physics     30
+9   Bernie      Y  physics    300
+10   Cindy      Z  physics   3000
+11     Deb      Y  physics  30000
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+```
+
+```
+  student    Class  Grades
+0    Andy  english      10
+1  Bernie  english     100
+2   Cindy  english    1000
+3     Deb  english   10000
+4    Andy     math      20
+5  Bernie     math     200
+6   Cindy     math    2000
+7     Deb     math   20000
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```python
+df_wide #Original wide data  
+df_wide.melt(id_vars=['student', 'school'])  
+
+df_wide.melt(id_vars='student',  
+value_vars=["english", "math"])  
+
+df_wide.melt(id_vars='student',  
+value_vars=["english", "math"],  
+var_name="Class", #label variable name  
+value_name="Grades") #label value name  
+```
+]]
+.column[.content[
+
+```
+   english   math  physics school student
+0       10     20       30      Z    Andy
+1      100    200      300      Y  Bernie
+2     1000   2000     3000      Z   Cindy
+3    10000  20000    30000      Y     Deb
+```
+
+```
+   student school variable  value
+0     Andy      Z  english     10
+1   Bernie      Y  english    100
+2    Cindy      Z  english   1000
+3      Deb      Y  english  10000
+4     Andy      Z     math     20
+5   Bernie      Y     math    200
+6    Cindy      Z     math   2000
+7      Deb      Y     math  20000
+8     Andy      Z  physics     30
+9   Bernie      Y  physics    300
+10   Cindy      Z  physics   3000
+11     Deb      Y  physics  30000
+```
+
+```
+  student variable  value
+0    Andy  english     10
+1  Bernie  english    100
+2   Cindy  english   1000
+3     Deb  english  10000
+4    Andy     math     20
+5  Bernie     math    200
+6   Cindy     math   2000
+7     Deb     math  20000
+```
+
+```
+  student    Class  Grades
+0    Andy  english      10
+1  Bernie  english     100
+2   Cindy  english    1000
+3     Deb  english   10000
+4    Andy     math      20
+5  Bernie     math     200
+6   Cindy     math    2000
+7     Deb     math   20000
+```
+]]
+
+
+
+---
 ## Stack and Unstack
 
-- Stack Kind of increases the index level i.e.
+- Stack increases the index level i.e.
 (a) for simple df creates index-columns pairs 
 (b) If dataframe has multi-level index, stack increases the index level
 
@@ -501,7 +1317,7 @@ FrozenList([[22, 25, 28], ['city', 'day2']])
 
 ---
 ### Stack 1.i
-- Still tackling (a). We know it creates index-columns pairs. What if we want a normal dataframe (no multiindex) ? Answer :  we can just use reset_index
+- Still tackling (a). We know it creates index-columns pairs. What if we want a normal dataframe (no multi-level index) ? Answer :  we can just use reset_index
 
 ---
 
@@ -997,11 +1813,11 @@ df2 = pd.DataFrame(np.random.randint(10, size=(5,2)),
 ```
               column_x  column_y
 first second                    
-A     1              5         8
-      2              0         2
-      3              5         1
-B     1              0         8
-A     2              2         2
+A     1              2         6
+      2              4         8
+      3              5         0
+B     1              5         3
+A     2              7         6
 ```
 ]]
 ---
@@ -1028,10 +1844,10 @@ df2
 ```
               column_x  column_y
 first second                    
-A     1              6         6
-      2              6         8
-      3              4         1
-B     1              4         8
+A     1              8         9
+      2              5         0
+      3              0         8
+B     1              5         0
 A     2              1         0
 ```
 
@@ -1064,11 +1880,11 @@ len(df2.index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              3         5
-      2              0         3
-      3              3         2
-B     1              5         6
-A     2              2         9
+A     1              0         6
+      2              4         3
+      3              5         0
+B     1              8         1
+A     2              2         0
 ```
 
 ```
@@ -1105,11 +1921,11 @@ print(df2.index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              1         6
-      2              1         3
-      3              5         5
-B     1              0         6
-A     2              9         3
+A     1              4         2
+      2              0         3
+      3              9         0
+B     1              6         8
+A     2              1         9
 ```
 
 ```
@@ -1150,11 +1966,11 @@ df2.index.levels
 ```
               column_x  column_y
 first second                    
-A     1              8         5
-      2              4         8
-      3              3         2
-B     1              5         6
-A     2              5         3
+A     1              3         4
+      2              3         6
+      3              4         7
+B     1              0         6
+A     2              4         4
 ```
 
 ```
@@ -1194,16 +2010,16 @@ count: false
 
 ```
 first  second          
-A      1       column_x    8
-               column_y    5
-       2       column_x    4
-               column_y    8
-       3       column_x    3
-               column_y    2
-B      1       column_x    5
+A      1       column_x    3
+               column_y    4
+       2       column_x    3
                column_y    6
-A      2       column_x    5
-               column_y    3
+       3       column_x    4
+               column_y    7
+B      1       column_x    0
+               column_y    6
+A      2       column_x    4
+               column_y    4
 dtype: int32
 ```
 ]]
@@ -1225,32 +2041,32 @@ df2.stack()
 
 ```
 first  second          
-A      1       column_x    8
-               column_y    5
-       2       column_x    4
-               column_y    8
-       3       column_x    3
-               column_y    2
-B      1       column_x    5
+A      1       column_x    3
+               column_y    4
+       2       column_x    3
                column_y    6
-A      2       column_x    5
-               column_y    3
+       3       column_x    4
+               column_y    7
+B      1       column_x    0
+               column_y    6
+A      2       column_x    4
+               column_y    4
 dtype: int32
 ```
 
 ```
                        0
 first second            
-A     1      column_x  8
-             column_y  5
-      2      column_x  4
-             column_y  8
-      3      column_x  3
-             column_y  2
-B     1      column_x  5
+A     1      column_x  3
+             column_y  4
+      2      column_x  3
              column_y  6
-A     2      column_x  5
-             column_y  3
+      3      column_x  4
+             column_y  7
+B     1      column_x  0
+             column_y  6
+A     2      column_x  4
+             column_y  4
 ```
 ]]
 ---
@@ -1271,32 +2087,32 @@ df2.stack().to_frame()
 
 ```
 first  second          
-A      1       column_x    8
-               column_y    5
-       2       column_x    4
-               column_y    8
-       3       column_x    3
-               column_y    2
-B      1       column_x    5
+A      1       column_x    3
+               column_y    4
+       2       column_x    3
                column_y    6
-A      2       column_x    5
-               column_y    3
+       3       column_x    4
+               column_y    7
+B      1       column_x    0
+               column_y    6
+A      2       column_x    4
+               column_y    4
 dtype: int32
 ```
 
 ```
                        0
 first second            
-A     1      column_x  8
-             column_y  5
-      2      column_x  4
-             column_y  8
-      3      column_x  3
-             column_y  2
-B     1      column_x  5
+A     1      column_x  3
+             column_y  4
+      2      column_x  3
              column_y  6
-A     2      column_x  5
-             column_y  3
+      3      column_x  4
+             column_y  7
+B     1      column_x  0
+             column_y  6
+A     2      column_x  4
+             column_y  4
 ```
 ]]
 
@@ -1485,10 +2301,10 @@ df2 = pd.DataFrame(np.random.randint(10, size=(4,2)),
 ```
               column_x  column_y
 first second                    
-A     1              4         7
-      2              0         6
-      3              5         7
-B     1              3         7
+A     1              8         8
+      2              2         1
+      3              5         2
+B     1              2         8
 ```
 ]]
 ---
@@ -1514,10 +2330,10 @@ df2
 ```
               column_x  column_y
 first second                    
-A     1              1         6
-      2              5         5
-      3              6         8
-B     1              9         2
+A     1              4         8
+      2              0         4
+      3              2         1
+B     1              0         8
 ```
 
 ```
@@ -1548,10 +2364,10 @@ len(df2.stack().to_frame().index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              1         8
-      2              9         6
-      3              1         8
-B     1              1         4
+A     1              6         6
+      2              4         9
+      3              0         6
+B     1              0         0
 ```
 
 ```
@@ -1587,9 +2403,9 @@ print(df2.stack().to_frame().index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              7         4
-      2              6         9
-      3              9         2
+A     1              8         9
+      2              8         4
+      3              6         2
 B     1              5         8
 ```
 
@@ -1632,10 +2448,10 @@ df2.stack().to_frame().index.levels
 ```
               column_x  column_y
 first second                    
-A     1              7         4
-      2              1         2
-      3              7         8
-B     1              4         9
+A     1              2         4
+      2              5         9
+      3              4         5
+B     1              4         1
 ```
 
 ```
@@ -1679,10 +2495,10 @@ stacked_df = df2.stack().to_frame()
 ```
               column_x  column_y
 first second                    
-A     1              1         7
-      2              3         2
-      3              6         2
-B     1              5         2
+A     1              6         4
+      2              6         7
+      3              7         3
+B     1              4         3
 ```
 
 ```
@@ -1701,10 +2517,10 @@ FrozenList([['A', 'B'], [1, 2, 3], ['column_x', 'column_y']])
                     0         
              column_x column_y
 first second                  
-A     1             1        7
-      2             3        2
-      3             6        2
-B     1             5        2
+A     1             6        4
+      2             6        7
+      3             7        3
+B     1             4        3
 ```
 ]]
 ---
@@ -1737,10 +2553,10 @@ stacked_df.unstack()
 ```
               column_x  column_y
 first second                    
-A     1              7         9
-      2              6         3
-      3              6         9
-B     1              5         7
+A     1              9         6
+      2              5         9
+      3              2         4
+B     1              3         5
 ```
 
 ```
@@ -1759,10 +2575,10 @@ FrozenList([['A', 'B'], [1, 2, 3], ['column_x', 'column_y']])
                     0         
              column_x column_y
 first second                  
-A     1             7        9
-      2             6        3
-      3             6        9
-B     1             5        7
+A     1             9        6
+      2             5        9
+      3             2        4
+B     1             3        5
 ```
 
 ```
@@ -1800,10 +2616,10 @@ len(stacked_df.unstack().index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              5         9
-      2              7         2
-      3              4         8
-B     1              4         4
+A     1              5         7
+      2              2         1
+      3              6         1
+B     1              7         6
 ```
 
 ```
@@ -1822,10 +2638,10 @@ FrozenList([['A', 'B'], [1, 2, 3], ['column_x', 'column_y']])
                     0         
              column_x column_y
 first second                  
-A     1             5        9
-      2             7        2
-      3             4        8
-B     1             4        4
+A     1             5        7
+      2             2        1
+      3             6        1
+B     1             7        6
 ```
 
 ```
@@ -1868,10 +2684,10 @@ print(stacked_df.unstack().index.levels)
 ```
               column_x  column_y
 first second                    
-A     1              2         1
-      2              5         8
-      3              3         1
-B     1              9         1
+A     1              8         4
+      2              9         1
+      3              3         5
+B     1              5         3
 ```
 
 ```
@@ -1890,10 +2706,10 @@ FrozenList([['A', 'B'], [1, 2, 3], ['column_x', 'column_y']])
                     0         
              column_x column_y
 first second                  
-A     1             2        1
-      2             5        8
-      3             3        1
-B     1             9        1
+A     1             8        4
+      2             9        1
+      3             3        5
+B     1             5        3
 ```
 
 ```
@@ -1940,10 +2756,10 @@ stacked_df.unstack().index.levels
 ```
               column_x  column_y
 first second                    
-A     1              6         8
-      2              0         0
-      3              9         9
-B     1              1         4
+A     1              0         6
+      2              1         2
+      3              3         5
+B     1              6         1
 ```
 
 ```
@@ -1962,10 +2778,10 @@ FrozenList([['A', 'B'], [1, 2, 3], ['column_x', 'column_y']])
                     0         
              column_x column_y
 first second                  
-A     1             6        8
-      2             0        0
-      3             9        9
-B     1             1        4
+A     1             0        6
+      2             1        2
+      3             3        5
+B     1             6        1
 ```
 
 ```
@@ -1986,37 +2802,9 @@ FrozenList([['A', 'B'], [1, 2, 3]])
 
 ---
 
-class: split-40
-count: false
- 
-
- 
-.column[.content[
-
-```python
-d = [2,3,4]  
-d  
-e = ["a","b","c"]  
-e  
-```
-]]
-.column[.content[
-
-```
-[2, 3, 4]
-```
-
-```
-['a', 'b', 'c']
-```
-]]
-
-
-
-
 
 &lt;style type="text/css"&gt;
-.remark-code{line-height: 1.5; font-size: 75%}
+.remark-code{line-height: 1.5; font-size: 50%}
 &lt;/style&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

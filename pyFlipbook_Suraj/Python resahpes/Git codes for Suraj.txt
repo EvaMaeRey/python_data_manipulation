@@ -1,0 +1,8 @@
+git add .
+git commit -m "dsds"
+git push
+
+git add py basics_files/
+git add plot.html
+
+gitm rm -r
