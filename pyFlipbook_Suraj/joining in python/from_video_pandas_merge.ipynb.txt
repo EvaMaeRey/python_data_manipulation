@@ -1,0 +1,8 @@
+Q for Dr. R:
+
+merging behavior is different. It only takes values from left dataframe. It also does not sort lexicographically .
+
+Financial times - korbel or all students 
+The economist - korbel or all students
+
+ 

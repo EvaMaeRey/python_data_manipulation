@@ -28,8 +28,6 @@ library(reticulate)
 
 ---
 
-
-
 `r chunk_reveal("import_packages", lang = "python")`
 
 ```{python import_packages, include = F}
