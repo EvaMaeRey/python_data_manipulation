@@ -1,0 +1,180 @@
+---
+title: "PyFlipbook for dictionary - part I"
+subtitle: "With {flipbookr} and xaringan"
+author: "Gina Reynolds & Suraj Thapa, July 2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
+                      comment = "", cache = F, fig.retina = 3, eval = T)
+library(flipbookr)
+#library(tidyverse)
+library(reticulate)
+
+```
+
+---
+# Import required packages
+---
+`r chunk_reveal("import_packages", lang = "python")`
+
+```{python import_packages, include = F}
+import numpy as np
+import pandas as pd
+```
+---
+# Dictionaries in python
+- Dictionaries are Python built-in data structures. For more go to: https://docs.python.org/3/tutorial/datastructures.html  
+- "A dictionary is a collection which is unordered, changeable and indexed. In Python dictionaries are written with curly brackets, and they have keys and values."
+https://www.w3schools.com/python/python_dictionaries.asp
+
+---
+# Learning
+## A. Creating a dictionary
+## B. Accessing a dictionary
+## C. Replace/update/alter a dictionary
+
+
+---
+## A. Creating a dictionary
+- There are multiple ways to create a dictionary.
+  - A.1 using curly brackets - {}
+  - A.2 using "dict"
+  - A.3 using "fromkeys"
+
+- Next is using curly brackets
+  - Empty dictionary
+---
+```{python a.1.a}
+dict_1 = {}
+```
+---
+```{python a.1.b}
+dict_1
+```
+---
+## A. Creating a dictionary
+- A.1 using curly brackets - {}
+- still using curly brackets
+  - dictionary with Key and Values
+---
+```{python a.1.c}
+dict_2 = {'Country':['Nepal', 'US', 'Hungary'], 
+         'Language':['Nepali', 'English'],
+         'Age':[70, 80, 90]}
+dict_2
+```
+
+---
+## A. Creating a dictionary
+- A.1 using curly brackets - {}
+- we are still using curly brackets
+  - using dict comprehensions
+  - (List Comprehension is a handy and faster way to create lists in Python in just a single line of code.)
+---
+```{python a.1.e}
+{y:y*3 for y in (2,4,6)}
+```
+---
+## A. Creating a dictionary
+- A.2 using "dict"
+---
+```{python a.2.a}
+dict([ ('Country',['Nepal','UK']),
+      ('Language','Nepalese') ])
+```
+---
+## A. Creating a dictionary
+- A.2 using "dict"
+  - When Keys are simple strings
+---
+```{Python a.2.b}
+dict(Country = ['Nepal','UK'], 
+     Language='Nepalese')
+#Dr. R Flipbooks does not give output in this case
+```
+---
+## A. Creating a dictionary
+- A.3 using "fromkeys"
+  - It is useful if value for all keys are the same. Default value is None.
+---
+```{python a.3.a}
+k = ('key1', 'key2', 'key3')
+v = ('value for all keys')
+k
+v
+```
+---
+```{python a.3.b}
+dict.fromkeys(k)
+```
+---
+```{python a.3.c}
+dict.fromkeys(k,v)
+```
+---
+## B. Accessing a dictionary
+- There are many ways to access key and values of a dictionary.
+  - Use [] bracket
+  - Use ".get"
+  - Access keys ()
+- We are going to use [] next.(Example 1)
+---
+```{python b.1.a}
+dict_2
+dict_2['Country']
+```
+---
+## B. Accessing a dictionary
+- Use [] bracket
+- Example 2 for [] (accessing history)
+---
+```{python b.1.b}
+sampleDict = { 
+   "class":{ 
+      "student":{ 
+         "name":"Mike",
+         "marks":{ 
+            "physics":70,
+            "history":80
+         }
+      }
+   }
+}
+sampleDict
+```
+---
+```{python b.1.c}
+sampleDict['class']
+```
+---
+```{python b.1.d}
+sampleDict['class']['student']
+```
+---
+```{python b.1.e}
+sampleDict['class']['student']['marks']['history']
+```
+---
+## B. Accessing a dictionary
+- Use ".get"
+---
+```{python b.2.a}
+dict_2.get('Country')
+```
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 100%}
+```

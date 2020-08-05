@@ -1,0 +1,122 @@
+---
+title: "PyFlipbook for dictionary - part I"
+subtitle: "With {flipbookr} and xaringan"
+author: "Gina Reynolds & Suraj Thapa, July 2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
+                      comment = "", cache = F, fig.retina = 3, eval = T)
+library(flipbookr)
+#library(tidyverse)
+library(reticulate)
+
+```
+
+---
+# Import required packages
+---
+`r chunk_reveal("import_packages", lang = "python")`
+
+```{python import_packages, include = F}
+import numpy as np
+import pandas as pd
+```
+---
+# String manipulations
+- We can use many built-in methods to manupilate strings. 
+  - They are, but not limited to, creation, accessing, length, finding words or letters, checking starts and ends with, counting, slicing, spliting, repeating strings, replacing, changing upper and lower case, reversing, stripping, joining, concenating, testing true or false values. 
+- To read more about string see https://docs.python.org/3.8/tutorial/introduction.html#strings
+- Given our evolutionary purpose for pyFlipbooks, we will focus on strip and split.
+
+---
+```{python a.1.i}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nCoram\n\nN\n\nCourt\n\nY\n\nCrowder\n\nY\n\nDonovan\n\nY\n\nFenberg\n\nY\n\nFields\n\nY\n\nPresident\n\nY\n\n\n\n"
+votes
+```
+---
+```{python a.1.ii}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nCoram\n\nN\n\nCourt\n\nY\n\nCrowder\n\nY\n\nDonovan\n\nY\n\nFenberg\n\nY\n\nFields\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes)
+```
+---
+### Let's strip leading whitespaces
+---
+```{python a.1.iii.a}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes)
+```
+---
+```{python a.1.iii.b}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.lstrip())
+```
+---
+### Let's strip trailing whitespaces
+---
+```{python a.1.iv.a}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes)
+```
+---
+```{python a.1.iv.b}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.rstrip())
+```
+---
+### Let's strip leading and trailing whitespaces
+---
+```{python a.1.v}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip())
+```
+
+---
+### Let's strip leading and trailing characters
+---
+```{python a.1.vi.a}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip())
+```
+---
+```{python a.1.vi.b}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip().strip("Member Name"))
+```
+---
+```{python a.1.vii}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip().strip("Member Name").strip())
+```
+---
+```{python a.1.viii}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip().strip("Member Name").strip().strip('Vote'))
+```
+---
+```{python a.1.ix}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip().strip("Member Name").strip().strip('Vote').strip())
+```
+---
+```{python a.1.x}
+votes = "\nMember Name\n\nVote\n\nAguilar\n\nY\n\nBaumgardner\n\nY\n\nCooke\n\nY\n\nPresident\n\nY\n\n\n\n"
+print(votes.strip().strip("Member Name").strip().strip('Vote').strip().split("\n\n"))
+```
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 100%}
+```
