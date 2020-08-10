@@ -1,7 +1,7 @@
 ---
 title: "Basics in Python"
 subtitle: "With {flipbookr} and xaringan"
-author: "Gina Reynolds, March 2020"
+author: "Reynolds Py Movies Lab"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -90,6 +90,52 @@ plt.ylabel('voltage (mV)')
 plt.grid(True)
 plt.show()
 ```
+
+
+
+---
+
+`r chunk_reveal("more_detail", lang = "python", title = "### A bit of a retrospective on the columns() and tolist() functions \n there is a pipeline of stuff going on")`
+
+
+
+```{python more_detail, eval = F, echo = F}
+import statsmodels.api as sm
+
+# whats going on with this tolist function
+sm.datasets.get_rdataset('airquality') \
+  .data \
+  .columns \
+  .tolist()
+```
+
+
+---
+
+`r chunk_reveal("more_detail2", lang = "python", title = "### A bit of a retrospective on the columns() and tolist() functions \n there is a pipeline of stuff going on", break_type = "rotate")`
+
+
+
+```{python more_detail2, eval = F, echo = F}
+# whats going on with this tolist function
+sm.datasets.get_rdataset('airquality') \
+  .data \
+  .columns \
+  .tolist()[:1]  #ROTATE
+  .tolist()[:2]  #ROTATE
+  .tolist()[:3]  #ROTATE
+  .tolist()[:4]  #ROTATE
+  .tolist()[:5]  #ROTATE
+  .tolist()[:6]  #ROTATE
+  .tolist()[0:]  #ROTATE
+  .tolist()[1:]  #ROTATE
+  .tolist()[2:]  #ROTATE
+  .tolist()[3:]  #ROTATE
+  .tolist()[4:]  #ROTATE
+  .tolist()[5:]  #ROTATE
+  .tolist()[1:3]  #ROTATE
+```
+
 
 
 

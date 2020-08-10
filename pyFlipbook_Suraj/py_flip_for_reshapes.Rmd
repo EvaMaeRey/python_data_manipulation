@@ -1,0 +1,322 @@
+---
+title: "PyFlipbook for reshapes"
+subtitle: "With {flipbookr} and xaringan"
+author: "Gina Reynolds & Suraj Thapa, May 2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
+                      comment = "", cache = F, fig.retina = 3, eval = T)
+library(flipbookr)
+#library(tidyverse)
+library(reticulate)
+
+```
+
+---
+# Import required packages
+
+
+```{python import_packages, include = F}
+import numpy as np
+import pandas as pd
+```
+
+---
+
+# Reshapes in python
+
+- We are going to learn various ways to reshape using python. They are:
+
+## 1. Melt
+## 2. Stack and Unstack
+## 3. Pivot
+
+---
+## Melt
+- Think melt as shaping wide format to long format
+- Create wide dataframe
+---
+
+---
+
+`r chunk_reveal("melt_df", lang = "python", break_type = 1)`
+
+```{python melt_df, include = F}
+student_scores = pd.DataFrame(
+{"student": ["Andy", "Bernie", "Cindy", "Deb"],
+"sex": ["M", "M", "F", "F"],
+"english": [98, 95, 70, 40], # eng grades
+"math": [66, 89, 60, 70], # math grades
+"physics": [78, 90, 92, 88] # physics grades
+})
+
+student_scores
+```
+
+---
+### Melt example 1.i
+
+- We are using only one column i.e. student
+
+---
+
+
+```{python melt_1}
+student_scores
+```
+
+
+---
+
+```{python}
+student_scores.melt(id_vars=['student', "sex"])
+```
+
+
+
+---
+
+<!-- rather than 'previous columns' make the examples concrete -->
+
+```{python}
+student_scores.melt(id_vars=['student', "sex"], var_name="subject")
+```
+
+---
+
+```{python}
+student_scores.melt(id_vars=['student', "sex"], var_name="subject", value_name="final_grade")
+```
+
+
+---
+
+```{python}
+student_scores.melt(id_vars=['student', "sex"], var_name="subject", value_name="final_grade").sort_values(by=['final_grade'], ascending=False)
+```
+
+
+---
+
+```{python}
+student_scores.melt(id_vars=['student', "sex"], var_name="subject", value_name="final_grade").sort_values(by=['final_grade'], ascending=False).head(3)
+```
+
+
+
+---
+
+`r chunk_reveal("hi", lang = "python")`
+
+
+```{python hi, include = F}
+student_scores \
+  .melt(id_vars=['student', "sex"], 
+        var_name="subject", 
+        value_name="final_grade") \
+  .sort_values(by=['final_grade'], ascending=False) \
+  .head(3)
+```
+
+
+
+---
+### Melt example 1.ii
+- We can use two or more columns
+---
+
+
+`r chunk_reveal("melt_2", lang = "python", widths = c(1,1))`
+
+
+```{python melt_2, include = F}
+student_scores[student_scores.student != 
+                    'Andy'] \
+  .drop('sex', axis=1) \
+  .melt(value_vars = ['english', 'math', 
+                      'physics'], 
+        value_name = "final_grade") \
+  .sort_values(by = ['final_grade']) \
+  .tail(5)
+```
+
+
+
+---
+## Stack and Unstack
+
+- Stack increases the index level i.e.
+(a) for simple df creates index-columns pairs 
+(b) If dataframe has multi-level index, stack increases the index level
+
+### Stack 1.i
+- Let's tackle (a). It will create index-columns pairs. For illustrative purpose 
+we will set index by ourself and then stack
+
+---
+
+`r chunk_reveal("stack_1", lang = "python")`
+
+```{python stack_1, include=FALSE}
+
+df1 = pd.DataFrame({'city':['SF','Boston','Chicago'],
+                   'summer':[22,25,28],
+                   'winter':[15,5,0],})
+df1 \
+  .set_index('summer') \
+  .stack() \
+  .index \
+  .levels
+ 
+df1 \
+  .set_index('summer') \
+  .stack() \
+  .shape
+
+df1 \
+  .set_index('summer') \
+  .stack() \
+  .index[0] #It's a multiindex now
+
+```
+
+---
+### Stack 1.i
+- Still tackling (a). We know it creates index-columns pairs. What if we want a normal dataframe (no multi-level index) ? Answer :  we can just use reset_index
+
+---
+
+`r chunk_reveal("stack_2", lang = "python")`
+
+```{python stack_2, include = F}
+df1
+
+day1_index_df = df1.set_index('summer') 
+
+day1_index_df.stack() #Previous slide
+
+day1_index_df.stack().reset_index() #Normal dataframe
+
+#This is no longer available : 
+# day1_index_df.stack().reset_index().index.levels
+day1_index_df.stack().reset_index().shape
+day1_index_df.stack().reset_index().index[0] 
+
+```
+
+---
+### Stack 1.ii
+
+- Let's tackle (b) which is : If dataframe has multi-level index, stack increases the index level.
+
+- First we will create a multi-level index dataframe and check levels. Notice the difference between output of print(df2.index.levels) and df2.index.levels.
+
+- to_frame() function is used to convert the given series object to a dataframe. 
+
+---
+
+`r chunk_reveal("stack_3", lang = "python")`
+
+```{python stack_3, echo=FALSE}
+tuples = [('A',1),
+          ('A',2),
+          ('A',3),
+          ('B',1),
+          ('A',2)]
+          
+index = pd.MultiIndex.from_tuples(tuples,
+names=['first','second'])
+df2 = pd.DataFrame(np.random.randint(10, size=(5,2)), 
+                   index=index, columns=['column_x', 'column_y'])
+df2 \
+  .index \
+  .levels
+  
+len(df2.index.levels)
+print(df2.index.levels)
+df2.index.levels
+```
+
+---
+- Now, let's stack these.
+
+- Remember : to_frame() function is used to convert the given series object to a dataframe.
+
+---
+
+`r chunk_reveal("stack_4", lang = "python")`
+
+```{python stack_4, include=FALSE}
+df2 \
+  .stack() \
+  .to_frame()
+```
+
+---
+- Now, let's check the index levels.
+
+---
+
+`r chunk_reveal("stack_5", lang = "python")`
+
+```{python stack_5, include=FALSE}
+
+len(df2.stack().to_frame().index.levels)
+print(df2.stack().to_frame().index.levels)
+df2.stack().to_frame().index.levels
+
+```
+
+---
+### UNSTACK
+
+- It's the opposite of stack.
+
+---
+
+`r chunk_reveal("stack_6", lang = "python")`
+
+```{python stack_6, include =FALSE}
+tuples = [('A',1),('A',2),('A',3),('B',1)]
+index = pd.MultiIndex.from_tuples(tuples,
+names=['first','second'])
+df2 = pd.DataFrame(np.random.randint(10, size=(4,2)), 
+                   index=index, columns=['column_x', 'column_y'])
+df2
+len(df2.stack().to_frame().index.levels)
+print(df2.stack().to_frame().index.levels)
+df2 \
+  .stack() \
+  .to_frame() \
+  .index \
+  .levels
+
+stacked_df = df2.stack().to_frame()
+
+stacked_df.unstack()
+len(stacked_df.unstack().index.levels)
+print(stacked_df.unstack().index.levels)
+stacked_df.unstack().index.levels
+
+```
+
+
+---
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+```

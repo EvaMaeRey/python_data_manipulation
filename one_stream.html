@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>An introduction data analysis python</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Reynolds py movies lab" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+class: left, top, inverse
+background-image: url(https://images.unsplash.com/photo-1476610182048-b716b8518aae?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1127&amp;q=80)
+background-size: cover
+
+# .Large[py one-stream &lt;br&gt;data frame manipulation]
+### Reynolds py movies lab
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+#### &lt;br&gt;Photo Credit: Robert Lukeman
+
+---
+
+
+
+
+
+### Flipbooks present data manipulation and analysis code dynamically with output, a strategy that should deliver insights about how to get things done in coded data analysis workflows.  
+
+--
+
+### The {flipbookr} python initiative began in the Spring of 2020 and is lead by Dr. Evangeline Reynolds.  Lab members and contributing authors in order of affiliation are Suraj Thapa, Rachel Goodman, and Lucca Picci.  
+
+---
+
+
+
+
+---
+
+
+```python
+import pandas as pd
+from vega_datasets import data
+import matplotlib.pylab as plt
+```
+
+
+---
+
+count: false
+ 
+
+.panel1-hans-auto[
+
+```python
+*gap_2000 = data
+
+gap_2000
+```
+]
+ 
+.panel2-hans-auto[
+
+```
+&lt;vega_datasets.core.DataLoader object at 0x11647c550&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-hans-auto[
+
+```python
+gap_2000 = data \
+* .countries()
+
+gap_2000
+```
+]
+ 
+.panel2-hans-auto[
+
+```
+                           _comment         country  fertility  life_expect  \
+0    Data courtesy of Gapminder.org     Afghanistan     7.7000       30.332   
+1                               NaN     Afghanistan     7.7000       31.997   
+2                               NaN     Afghanistan     7.7000       34.020   
+3                               NaN     Afghanistan     7.7000       36.088   
+4                               NaN     Afghanistan     7.7000       38.438   
+5                               NaN     Afghanistan     7.8000       39.854   
+6                               NaN     Afghanistan     7.9000       40.822   
+7                               NaN     Afghanistan     8.0000       41.674   
+8                               NaN     Afghanistan     8.0000       41.763   
+9                               NaN     Afghanistan     7.4792       42.129   
+10                              NaN       Argentina     3.1265       64.399   
+11                              NaN       Argentina     3.0895       65.142   
+12                              NaN       Argentina     3.0490       65.634   
+13                              NaN       Argentina     3.1455       67.065   
+14                              NaN       Argentina     3.4400       68.481   
+15                              NaN       Argentina     3.1500       69.942   
+16                              NaN       Argentina     3.0530       70.774   
+17                              NaN       Argentina     2.9000       71.868   
+18                              NaN       Argentina     2.6300       73.275   
+19                              NaN       Argentina     2.3500       74.340   
+20                              NaN           Aruba     5.1500       64.381   
+21                              NaN           Aruba     4.3990       66.606   
+22                              NaN           Aruba     3.3010       68.336   
+23                              NaN           Aruba     2.6510       70.941   
+24                              NaN           Aruba     2.4500       71.830   
+25                              NaN           Aruba     2.3580       74.116   
+26                              NaN           Aruba     2.3000       74.494   
+27                              NaN           Aruba     2.2800       74.108   
+28                              NaN           Aruba     2.2080       73.011   
+29                              NaN           Aruba     2.1240       73.451   
+..                              ...             ...        ...          ...   
+600                             NaN  United Kingdom     2.4900       70.420   
+601                             NaN  United Kingdom     2.8100       70.760   
+602                             NaN  United Kingdom     2.5200       71.360   
+603                             NaN  United Kingdom     2.0400       72.010   
+604                             NaN  United Kingdom     1.7200       72.760   
+605                             NaN  United Kingdom     1.8000       74.040   
+606                             NaN  United Kingdom     1.8100       75.007   
+607                             NaN  United Kingdom     1.7800       76.420   
+608                             NaN  United Kingdom     1.7000       77.218   
+609                             NaN  United Kingdom     1.6950       78.471   
+610                             NaN   United States     3.7060       69.490   
+611                             NaN   United States     3.3140       70.210   
+612                             NaN   United States     2.5450       70.760   
+613                             NaN   United States     2.0160       71.340   
+614                             NaN   United States     1.7880       73.380   
+615                             NaN   United States     1.8250       74.650   
+616                             NaN   United States     1.9240       75.020   
+617                             NaN   United States     2.0250       76.090   
+618                             NaN   United States     1.9940       76.810   
+619                             NaN   United States     2.0380       77.310   
+620                             NaN       Venezuela     6.4585       57.907   
+621                             NaN       Venezuela     6.6570       60.770   
+622                             NaN       Venezuela     5.9045       63.479   
+623                             NaN       Venezuela     4.9410       65.712   
+624                             NaN       Venezuela     4.4685       67.456   
+625                             NaN       Venezuela     3.9570       68.557   
+626                             NaN       Venezuela     3.6485       70.190   
+627                             NaN       Venezuela     3.2500       71.150   
+628                             NaN       Venezuela     2.9415       72.146   
+629                             NaN       Venezuela     2.7230       72.766   
+
+     n_fertility  n_life_expect  p_fertility  p_life_expect  year  
+0         7.7000         31.997          NaN            NaN  1955  
+1         7.7000         34.020       7.7000         30.332  1960  
+2         7.7000         36.088       7.7000         31.997  1965  
+3         7.7000         38.438       7.7000         34.020  1970  
+4         7.8000         39.854       7.7000         36.088  1975  
+5         7.9000         40.822       7.7000         38.438  1980  
+6         8.0000         41.674       7.8000         39.854  1985  
+7         8.0000         41.763       7.9000         40.822  1990  
+8         7.4792         42.129       8.0000         41.674  1995  
+9            NaN            NaN       8.0000         41.763  2000  
+10        3.0895         65.142          NaN            NaN  1955  
+11        3.0490         65.634       3.1265         64.399  1960  
+12        3.1455         67.065       3.0895         65.142  1965  
+13        3.4400         68.481       3.0490         65.634  1970  
+14        3.1500         69.942       3.1455         67.065  1975  
+15        3.0530         70.774       3.4400         68.481  1980  
+16        2.9000         71.868       3.1500         69.942  1985  
+17        2.6300         73.275       3.0530         70.774  1990  
+18        2.3500         74.340       2.9000         71.868  1995  
+19           NaN            NaN       2.6300         73.275  2000  
+20        4.3990         66.606          NaN            NaN  1955  
+21        3.3010         68.336       5.1500         64.381  1960  
+22        2.6510         70.941       4.3990         66.606  1965  
+23        2.4500         71.830       3.3010         68.336  1970  
+24        2.3580         74.116       2.6510         70.941  1975  
+25        2.3000         74.494       2.4500         71.830  1980  
+26        2.2800         74.108       2.3580         74.116  1985  
+27        2.2080         73.011       2.3000         74.494  1990  
+28        2.1240         73.451       2.2800         74.108  1995  
+29           NaN            NaN       2.2080         73.011  2000  
+..           ...            ...          ...            ...   ...  
+600       2.8100         70.760          NaN            NaN  1955  
+601       2.5200         71.360       2.4900         70.420  1960  
+602       2.0400         72.010       2.8100         70.760  1965  
+603       1.7200         72.760       2.5200         71.360  1970  
+604       1.8000         74.040       2.0400         72.010  1975  
+605       1.8100         75.007       1.7200         72.760  1980  
+606       1.7800         76.420       1.8000         74.040  1985  
+607       1.7000         77.218       1.8100         75.007  1990  
+608       1.6950         78.471       1.7800         76.420  1995  
+609          NaN            NaN       1.7000         77.218  2000  
+610       3.3140         70.210          NaN            NaN  1955  
+611       2.5450         70.760       3.7060         69.490  1960  
+612       2.0160         71.340       3.3140         70.210  1965  
+613       1.7880         73.380       2.5450         70.760  1970  
+614       1.8250         74.650       2.0160         71.340  1975  
+615       1.9240         75.020       1.7880         73.380  1980  
+616       2.0250         76.090       1.8250         74.650  1985  
+617       1.9940         76.810       1.9240         75.020  1990  
+618       2.0380         77.310       2.0250         76.090  1995  
+619          NaN            NaN       1.9940         76.810  2000  
+620       6.6570         60.770          NaN            NaN  1955  
+621       5.9045         63.479       6.4585         57.907  1960  
+622       4.9410         65.712       6.6570         60.770  1965  
+623       4.4685         67.456       5.9045         63.479  1970  
+624       3.9570         68.557       4.9410         65.712  1975  
+625       3.6485         70.190       4.4685         67.456  1980  
+626       3.2500         71.150       3.9570         68.557  1985  
+627       2.9415         72.146       3.6485         70.190  1990  
+628       2.7230         72.766       3.2500         71.150  1995  
+629          NaN            NaN       2.9415         72.146  2000  
+
+[630 rows x 9 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-hans-auto[
+
+```python
+gap_2000 = data \
+  .countries()  \
+* .drop(['_comment'], axis = 1)
+
+gap_2000
+```
+]
+ 
+.panel2-hans-auto[
+
+```
+            country  fertility  life_expect  n_fertility  n_life_expect  \
+0       Afghanistan     7.7000       30.332       7.7000         31.997   
+1       Afghanistan     7.7000       31.997       7.7000         34.020   
+2       Afghanistan     7.7000       34.020       7.7000         36.088   
+3       Afghanistan     7.7000       36.088       7.7000         38.438   
+4       Afghanistan     7.7000       38.438       7.8000         39.854   
+5       Afghanistan     7.8000       39.854       7.9000         40.822   
+6       Afghanistan     7.9000       40.822       8.0000         41.674   
+7       Afghanistan     8.0000       41.674       8.0000         41.763   
+8       Afghanistan     8.0000       41.763       7.4792         42.129   
+9       Afghanistan     7.4792       42.129          NaN            NaN   
+10        Argentina     3.1265       64.399       3.0895         65.142   
+11        Argentina     3.0895       65.142       3.0490         65.634   
+12        Argentina     3.0490       65.634       3.1455         67.065   
+13        Argentina     3.1455       67.065       3.4400         68.481   
+14        Argentina     3.4400       68.481       3.1500         69.942   
+15        Argentina     3.1500       69.942       3.0530         70.774   
+16        Argentina     3.0530       70.774       2.9000         71.868   
+17        Argentina     2.9000       71.868       2.6300         73.275   
+18        Argentina     2.6300       73.275       2.3500         74.340   
+19        Argentina     2.3500       74.340          NaN            NaN   
+20            Aruba     5.1500       64.381       4.3990         66.606   
+21            Aruba     4.3990       66.606       3.3010         68.336   
+22            Aruba     3.3010       68.336       2.6510         70.941   
+23            Aruba     2.6510       70.941       2.4500         71.830   
+24            Aruba     2.4500       71.830       2.3580         74.116   
+25            Aruba     2.3580       74.116       2.3000         74.494   
+26            Aruba     2.3000       74.494       2.2800         74.108   
+27            Aruba     2.2800       74.108       2.2080         73.011   
+28            Aruba     2.2080       73.011       2.1240         73.451   
+29            Aruba     2.1240       73.451          NaN            NaN   
+..              ...        ...          ...          ...            ...   
+600  United Kingdom     2.4900       70.420       2.8100         70.760   
+601  United Kingdom     2.8100       70.760       2.5200         71.360   
+602  United Kingdom     2.5200       71.360       2.0400         72.010   
+603  United Kingdom     2.0400       72.010       1.7200         72.760   
+604  United Kingdom     1.7200       72.760       1.8000         74.040   
+605  United Kingdom     1.8000       74.040       1.8100         75.007   
+606  United Kingdom     1.8100       75.007       1.7800         76.420   
+607  United Kingdom     1.7800       76.420       1.7000         77.218   
+608  United Kingdom     1.7000       77.218       1.6950         78.471   
+609  United Kingdom     1.6950       78.471          NaN            NaN   
+610   United States     3.7060       69.490       3.3140         70.210   
+611   United States     3.3140       70.210       2.5450         70.760   
+612   United States     2.5450       70.760       2.0160         71.340   
+613   United States     2.0160       71.340       1.7880         73.380   
+614   United States     1.7880       73.380       1.8250         74.650   
+615   United States     1.8250       74.650       1.9240         75.020   
+616   United States     1.9240       75.020       2.0250         76.090   
+617   United States     2.0250       76.090       1.9940         76.810   
+618   United States     1.9940       76.810       2.0380         77.310   
+619   United States     2.0380       77.310          NaN            NaN   
+620       Venezuela     6.4585       57.907       6.6570         60.770   
+621       Venezuela     6.6570       60.770       5.9045         63.479   
+622       Venezuela     5.9045       63.479       4.9410         65.712   
+623       Venezuela     4.9410       65.712       4.4685         67.456   
+624       Venezuela     4.4685       67.456       3.9570         68.557   
+625       Venezuela     3.9570       68.557       3.6485         70.190   
+626       Venezuela     3.6485       70.190       3.2500         71.150   
+627       Venezuela     3.2500       71.150       2.9415         72.146   
+628       Venezuela     2.9415       72.146       2.7230         72.766   
+629       Venezuela     2.7230       72.766          NaN            NaN   
+
+     p_fertility  p_life_expect  year  
+0            NaN            NaN  1955  
+1         7.7000         30.332  1960  
+2         7.7000         31.997  1965  
+3         7.7000         34.020  1970  
+4         7.7000         36.088  1975  
+5         7.7000         38.438  1980  
+6         7.8000         39.854  1985  
+7         7.9000         40.822  1990  
+8         8.0000         41.674  1995  
+9         8.0000         41.763  2000  
+10           NaN            NaN  1955  
+11        3.1265         64.399  1960  
+12        3.0895         65.142  1965  
+13        3.0490         65.634  1970  
+14        3.1455         67.065  1975  
+15        3.4400         68.481  1980  
+16        3.1500         69.942  1985  
+17        3.0530         70.774  1990  
+18        2.9000         71.868  1995  
+19        2.6300         73.275  2000  
+20           NaN            NaN  1955  
+21        5.1500         64.381  1960  
+22        4.3990         66.606  1965  
+23        3.3010         68.336  1970  
+24        2.6510         70.941  1975  
+25        2.4500         71.830  1980  
+26        2.3580         74.116  1985  
+27        2.3000         74.494  1990  
+28        2.2800         74.108  1995  
+29        2.2080         73.011  2000  
+..           ...            ...   ...  
+600          NaN            NaN  1955  
+601       2.4900         70.420  1960  
+602       2.8100         70.760  1965  
+603       2.5200         71.360  1970  
+604       2.0400         72.010  1975  
+605       1.7200         72.760  1980  
+606       1.8000         74.040  1985  
+607       1.8100         75.007  1990  
+608       1.7800         76.420  1995  
+609       1.7000         77.218  2000  
+610          NaN            NaN  1955  
+611       3.7060         69.490  1960  
+612       3.3140         70.210  1965  
+613       2.5450         70.760  1970  
+614       2.0160         71.340  1975  
+615       1.7880         73.380  1980  
+616       1.8250         74.650  1985  
+617       1.9240         75.020  1990  
+618       2.0250         76.090  1995  
+619       1.9940         76.810  2000  
+620          NaN            NaN  1955  
+621       6.4585         57.907  1960  
+622       6.6570         60.770  1965  
+623       5.9045         63.479  1970  
+624       4.9410         65.712  1975  
+625       4.4685         67.456  1980  
+626       3.9570         68.557  1985  
+627       3.6485         70.190  1990  
+628       3.2500         71.150  1995  
+629       2.9415         72.146  2000  
+
+[630 rows x 8 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-hans-auto[
+
+```python
+gap_2000 = data \
+  .countries()  \
+  .drop(['_comment'], axis = 1) \
+* .filter(['country', 'life_expect',
+*          'year', 'fertility'])
+
+gap_2000
+```
+]
+ 
+.panel2-hans-auto[
+
+```
+            country  life_expect  year  fertility
+0       Afghanistan       30.332  1955     7.7000
+1       Afghanistan       31.997  1960     7.7000
+2       Afghanistan       34.020  1965     7.7000
+3       Afghanistan       36.088  1970     7.7000
+4       Afghanistan       38.438  1975     7.7000
+5       Afghanistan       39.854  1980     7.8000
+6       Afghanistan       40.822  1985     7.9000
+7       Afghanistan       41.674  1990     8.0000
+8       Afghanistan       41.763  1995     8.0000
+9       Afghanistan       42.129  2000     7.4792
+10        Argentina       64.399  1955     3.1265
+11        Argentina       65.142  1960     3.0895
+12        Argentina       65.634  1965     3.0490
+13        Argentina       67.065  1970     3.1455
+14        Argentina       68.481  1975     3.4400
+15        Argentina       69.942  1980     3.1500
+16        Argentina       70.774  1985     3.0530
+17        Argentina       71.868  1990     2.9000
+18        Argentina       73.275  1995     2.6300
+19        Argentina       74.340  2000     2.3500
+20            Aruba       64.381  1955     5.1500
+21            Aruba       66.606  1960     4.3990
+22            Aruba       68.336  1965     3.3010
+23            Aruba       70.941  1970     2.6510
+24            Aruba       71.830  1975     2.4500
+25            Aruba       74.116  1980     2.3580
+26            Aruba       74.494  1985     2.3000
+27            Aruba       74.108  1990     2.2800
+28            Aruba       73.011  1995     2.2080
+29            Aruba       73.451  2000     2.1240
+..              ...          ...   ...        ...
+600  United Kingdom       70.420  1955     2.4900
+601  United Kingdom       70.760  1960     2.8100
+602  United Kingdom       71.360  1965     2.5200
+603  United Kingdom       72.010  1970     2.0400
+604  United Kingdom       72.760  1975     1.7200
+605  United Kingdom       74.040  1980     1.8000
+606  United Kingdom       75.007  1985     1.8100
+607  United Kingdom       76.420  1990     1.7800
+608  United Kingdom       77.218  1995     1.7000
+609  United Kingdom       78.471  2000     1.6950
+610   United States       69.490  1955     3.7060
+611   United States       70.210  1960     3.3140
+612   United States       70.760  1965     2.5450
+613   United States       71.340  1970     2.0160
+614   United States       73.380  1975     1.7880
+615   United States       74.650  1980     1.8250
+616   United States       75.020  1985     1.9240
+617   United States       76.090  1990     2.0250
+618   United States       76.810  1995     1.9940
+619   United States       77.310  2000     2.0380
+620       Venezuela       57.907  1955     6.4585
+621       Venezuela       60.770  1960     6.6570
+622       Venezuela       63.479  1965     5.9045
+623       Venezuela       65.712  1970     4.9410
+624       Venezuela       67.456  1975     4.4685
+625       Venezuela       68.557  1980     3.9570
+626       Venezuela       70.190  1985     3.6485
+627       Venezuela       71.150  1990     3.2500
+628       Venezuela       72.146  1995     2.9415
+629       Venezuela       72.766  2000     2.7230
+
+[630 rows x 4 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-hans-auto[
+
+```python
+gap_2000 = data \
+  .countries()  \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect',
+           'year', 'fertility'])
+
+*gap_2000 = gap_2000[gap_2000.year.eq(2000)]
+
+gap_2000
+```
+]
+ 
+.panel2-hans-auto[
+
+```
+                country  life_expect  year  fertility
+9           Afghanistan       42.129  2000     7.4792
+19            Argentina       74.340  2000     2.3500
+29                Aruba       73.451  2000     2.1240
+39            Australia       80.370  2000     1.7560
+49              Austria       78.980  2000     1.3820
+59              Bahamas       71.068  2000     2.1111
+69           Bangladesh       62.013  2000     3.2240
+79             Barbados       75.970  2000     1.5000
+89              Belgium       78.320  2000     1.6380
+99              Bolivia       63.883  2000     3.9585
+109              Brazil       71.006  2000     2.3450
+119              Canada       79.770  2000     1.5220
+129               Chile       77.860  2000     2.0000
+139               China       72.028  2000     1.7000
+149            Colombia       71.682  2000     2.4705
+159          Costa Rica       78.123  2000     2.2815
+169             Croatia       74.876  2000     1.3480
+179                Cuba       77.158  2000     1.6300
+189  Dominican Republic       70.847  2000     2.9500
+199             Ecuador       74.173  2000     2.8175
+209               Egypt       69.806  2000     3.1740
+219         El Salvador       70.734  2000     2.8830
+229             Finland       78.370  2000     1.7540
+239              France       79.590  2000     1.8833
+249             Georgia       70.476  2000     1.4780
+259             Germany       78.670  2000     1.3460
+269              Greece       78.256  2000     1.2770
+279             Grenada       67.746  2000     2.4290
+289               Haiti       58.137  2000     4.0000
+299           Hong Kong       81.495  2000     0.9400
+..                  ...          ...   ...        ...
+339                Iran       69.451  2000     2.1240
+349                Iraq       57.046  2000     4.8580
+359             Ireland       77.783  2000     1.9690
+369              Israel       79.696  2000     2.9060
+379               Italy       80.240  2000     1.2860
+389             Jamaica       72.047  2000     2.6280
+399               Japan       82.000  2000     1.2910
+409               Kenya       50.992  2000     5.0000
+419         South Korea       66.662  2000     1.9173
+429         North Korea       77.045  2000     1.2420
+439             Lebanon       71.028  2000     2.3190
+449              Mexico       74.902  2000     2.4005
+459         Netherlands       78.530  2000     1.7260
+469         New Zealand       79.110  2000     1.9640
+479             Nigeria       46.608  2000     5.8450
+489              Norway       79.050  2000     1.8010
+499            Pakistan       63.610  2000     3.9936
+509                Peru       69.906  2000     2.7005
+519         Philippines       70.303  2000     3.5436
+529              Poland       74.670  2000     1.2510
+539            Portugal       77.290  2000     1.4540
+549              Rwanda       43.413  2000     6.0100
+559        Saudi Arabia       71.626  2000     3.8100
+569        South Africa       53.365  2000     2.8020
+579               Spain       79.780  2000     1.2870
+589         Switzerland       80.620  2000     1.4150
+599              Turkey       70.845  2000     2.2300
+609      United Kingdom       78.471  2000     1.6950
+619       United States       77.310  2000     2.0380
+629           Venezuela       72.766  2000     2.7230
+
+[63 rows x 4 columns]
+```
+]
+
+&lt;style&gt;
+.panel1-hans-auto {
+  color: black;
+  width: 38.6060606060606%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-hans-auto {
+  color: black;
+  width: 59.3939393939394%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-hans-auto {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+*import matplotlib.pyplot as plt
+```
+]
+ 
+.panel2-plotting1-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+*fig, ax = plt.subplots(figsize = (10,7))
+```
+]
+ 
+.panel2-plotting1-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+*plt.scatter(x = gap_2000.life_expect,
+*           y = gap_2000.fertility)
+```
+]
+ 
+.panel2-plotting1-auto[
+&lt;img src="one_stream_files/figure-html/plotting1_auto_03_output-1.png" width="960" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+plt.scatter(x = gap_2000.life_expect,
+            y = gap_2000.fertility)
+
+*ax. set_title('Life expectancy and fertility are strongly negatively correlated',
+*   fontsize='x-large')
+```
+]
+ 
+.panel2-plotting1-auto[
+&lt;img src="one_stream_files/figure-html/plotting1_auto_04_output-1.png" width="960" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+plt.scatter(x = gap_2000.life_expect,
+            y = gap_2000.fertility)
+
+ax. set_title('Life expectancy and fertility are strongly negatively correlated',
+    fontsize='x-large')
+*ax.set_xlabel('life expectancy (years)',
+*   fontsize='x-large')
+```
+]
+ 
+.panel2-plotting1-auto[
+&lt;img src="one_stream_files/figure-html/plotting1_auto_05_output-1.png" width="960" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plotting1-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+plt.scatter(x = gap_2000.life_expect,
+            y = gap_2000.fertility)
+
+ax. set_title('Life expectancy and fertility are strongly negatively correlated',
+    fontsize='x-large')
+ax.set_xlabel('life expectancy (years)',
+    fontsize='x-large')
+*ax.set_xlabel('fertility (average number of children)',
+*   fontsize='x-large')
+```
+]
+ 
+.panel2-plotting1-auto[
+
+```
+Text(0.5,0,'fertility (average number of children)')
+```
+]
+
+&lt;style&gt;
+.panel1-plotting1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plotting1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plotting1-auto {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+
+---
+
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+*gm = data
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+&lt;vega_datasets.core.DataLoader object at 0x11647c550&gt;
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+* .countries()
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+                           _comment         country  fertility  life_expect  \
+0    Data courtesy of Gapminder.org     Afghanistan     7.7000       30.332   
+1                               NaN     Afghanistan     7.7000       31.997   
+2                               NaN     Afghanistan     7.7000       34.020   
+3                               NaN     Afghanistan     7.7000       36.088   
+4                               NaN     Afghanistan     7.7000       38.438   
+5                               NaN     Afghanistan     7.8000       39.854   
+6                               NaN     Afghanistan     7.9000       40.822   
+7                               NaN     Afghanistan     8.0000       41.674   
+8                               NaN     Afghanistan     8.0000       41.763   
+9                               NaN     Afghanistan     7.4792       42.129   
+10                              NaN       Argentina     3.1265       64.399   
+11                              NaN       Argentina     3.0895       65.142   
+12                              NaN       Argentina     3.0490       65.634   
+13                              NaN       Argentina     3.1455       67.065   
+14                              NaN       Argentina     3.4400       68.481   
+15                              NaN       Argentina     3.1500       69.942   
+16                              NaN       Argentina     3.0530       70.774   
+17                              NaN       Argentina     2.9000       71.868   
+18                              NaN       Argentina     2.6300       73.275   
+19                              NaN       Argentina     2.3500       74.340   
+20                              NaN           Aruba     5.1500       64.381   
+21                              NaN           Aruba     4.3990       66.606   
+22                              NaN           Aruba     3.3010       68.336   
+23                              NaN           Aruba     2.6510       70.941   
+24                              NaN           Aruba     2.4500       71.830   
+25                              NaN           Aruba     2.3580       74.116   
+26                              NaN           Aruba     2.3000       74.494   
+27                              NaN           Aruba     2.2800       74.108   
+28                              NaN           Aruba     2.2080       73.011   
+29                              NaN           Aruba     2.1240       73.451   
+..                              ...             ...        ...          ...   
+600                             NaN  United Kingdom     2.4900       70.420   
+601                             NaN  United Kingdom     2.8100       70.760   
+602                             NaN  United Kingdom     2.5200       71.360   
+603                             NaN  United Kingdom     2.0400       72.010   
+604                             NaN  United Kingdom     1.7200       72.760   
+605                             NaN  United Kingdom     1.8000       74.040   
+606                             NaN  United Kingdom     1.8100       75.007   
+607                             NaN  United Kingdom     1.7800       76.420   
+608                             NaN  United Kingdom     1.7000       77.218   
+609                             NaN  United Kingdom     1.6950       78.471   
+610                             NaN   United States     3.7060       69.490   
+611                             NaN   United States     3.3140       70.210   
+612                             NaN   United States     2.5450       70.760   
+613                             NaN   United States     2.0160       71.340   
+614                             NaN   United States     1.7880       73.380   
+615                             NaN   United States     1.8250       74.650   
+616                             NaN   United States     1.9240       75.020   
+617                             NaN   United States     2.0250       76.090   
+618                             NaN   United States     1.9940       76.810   
+619                             NaN   United States     2.0380       77.310   
+620                             NaN       Venezuela     6.4585       57.907   
+621                             NaN       Venezuela     6.6570       60.770   
+622                             NaN       Venezuela     5.9045       63.479   
+623                             NaN       Venezuela     4.9410       65.712   
+624                             NaN       Venezuela     4.4685       67.456   
+625                             NaN       Venezuela     3.9570       68.557   
+626                             NaN       Venezuela     3.6485       70.190   
+627                             NaN       Venezuela     3.2500       71.150   
+628                             NaN       Venezuela     2.9415       72.146   
+629                             NaN       Venezuela     2.7230       72.766   
+
+     n_fertility  n_life_expect  p_fertility  p_life_expect  year  
+0         7.7000         31.997          NaN            NaN  1955  
+1         7.7000         34.020       7.7000         30.332  1960  
+2         7.7000         36.088       7.7000         31.997  1965  
+3         7.7000         38.438       7.7000         34.020  1970  
+4         7.8000         39.854       7.7000         36.088  1975  
+5         7.9000         40.822       7.7000         38.438  1980  
+6         8.0000         41.674       7.8000         39.854  1985  
+7         8.0000         41.763       7.9000         40.822  1990  
+8         7.4792         42.129       8.0000         41.674  1995  
+9            NaN            NaN       8.0000         41.763  2000  
+10        3.0895         65.142          NaN            NaN  1955  
+11        3.0490         65.634       3.1265         64.399  1960  
+12        3.1455         67.065       3.0895         65.142  1965  
+13        3.4400         68.481       3.0490         65.634  1970  
+14        3.1500         69.942       3.1455         67.065  1975  
+15        3.0530         70.774       3.4400         68.481  1980  
+16        2.9000         71.868       3.1500         69.942  1985  
+17        2.6300         73.275       3.0530         70.774  1990  
+18        2.3500         74.340       2.9000         71.868  1995  
+19           NaN            NaN       2.6300         73.275  2000  
+20        4.3990         66.606          NaN            NaN  1955  
+21        3.3010         68.336       5.1500         64.381  1960  
+22        2.6510         70.941       4.3990         66.606  1965  
+23        2.4500         71.830       3.3010         68.336  1970  
+24        2.3580         74.116       2.6510         70.941  1975  
+25        2.3000         74.494       2.4500         71.830  1980  
+26        2.2800         74.108       2.3580         74.116  1985  
+27        2.2080         73.011       2.3000         74.494  1990  
+28        2.1240         73.451       2.2800         74.108  1995  
+29           NaN            NaN       2.2080         73.011  2000  
+..           ...            ...          ...            ...   ...  
+600       2.8100         70.760          NaN            NaN  1955  
+601       2.5200         71.360       2.4900         70.420  1960  
+602       2.0400         72.010       2.8100         70.760  1965  
+603       1.7200         72.760       2.5200         71.360  1970  
+604       1.8000         74.040       2.0400         72.010  1975  
+605       1.8100         75.007       1.7200         72.760  1980  
+606       1.7800         76.420       1.8000         74.040  1985  
+607       1.7000         77.218       1.8100         75.007  1990  
+608       1.6950         78.471       1.7800         76.420  1995  
+609          NaN            NaN       1.7000         77.218  2000  
+610       3.3140         70.210          NaN            NaN  1955  
+611       2.5450         70.760       3.7060         69.490  1960  
+612       2.0160         71.340       3.3140         70.210  1965  
+613       1.7880         73.380       2.5450         70.760  1970  
+614       1.8250         74.650       2.0160         71.340  1975  
+615       1.9240         75.020       1.7880         73.380  1980  
+616       2.0250         76.090       1.8250         74.650  1985  
+617       1.9940         76.810       1.9240         75.020  1990  
+618       2.0380         77.310       2.0250         76.090  1995  
+619          NaN            NaN       1.9940         76.810  2000  
+620       6.6570         60.770          NaN            NaN  1955  
+621       5.9045         63.479       6.4585         57.907  1960  
+622       4.9410         65.712       6.6570         60.770  1965  
+623       4.4685         67.456       5.9045         63.479  1970  
+624       3.9570         68.557       4.9410         65.712  1975  
+625       3.6485         70.190       4.4685         67.456  1980  
+626       3.2500         71.150       3.9570         68.557  1985  
+627       2.9415         72.146       3.6485         70.190  1990  
+628       2.7230         72.766       3.2500         71.150  1995  
+629          NaN            NaN       2.9415         72.146  2000  
+
+[630 rows x 9 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+  .countries() \
+* .drop(['_comment'], axis = 1)
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+            country  fertility  life_expect  n_fertility  n_life_expect  \
+0       Afghanistan     7.7000       30.332       7.7000         31.997   
+1       Afghanistan     7.7000       31.997       7.7000         34.020   
+2       Afghanistan     7.7000       34.020       7.7000         36.088   
+3       Afghanistan     7.7000       36.088       7.7000         38.438   
+4       Afghanistan     7.7000       38.438       7.8000         39.854   
+5       Afghanistan     7.8000       39.854       7.9000         40.822   
+6       Afghanistan     7.9000       40.822       8.0000         41.674   
+7       Afghanistan     8.0000       41.674       8.0000         41.763   
+8       Afghanistan     8.0000       41.763       7.4792         42.129   
+9       Afghanistan     7.4792       42.129          NaN            NaN   
+10        Argentina     3.1265       64.399       3.0895         65.142   
+11        Argentina     3.0895       65.142       3.0490         65.634   
+12        Argentina     3.0490       65.634       3.1455         67.065   
+13        Argentina     3.1455       67.065       3.4400         68.481   
+14        Argentina     3.4400       68.481       3.1500         69.942   
+15        Argentina     3.1500       69.942       3.0530         70.774   
+16        Argentina     3.0530       70.774       2.9000         71.868   
+17        Argentina     2.9000       71.868       2.6300         73.275   
+18        Argentina     2.6300       73.275       2.3500         74.340   
+19        Argentina     2.3500       74.340          NaN            NaN   
+20            Aruba     5.1500       64.381       4.3990         66.606   
+21            Aruba     4.3990       66.606       3.3010         68.336   
+22            Aruba     3.3010       68.336       2.6510         70.941   
+23            Aruba     2.6510       70.941       2.4500         71.830   
+24            Aruba     2.4500       71.830       2.3580         74.116   
+25            Aruba     2.3580       74.116       2.3000         74.494   
+26            Aruba     2.3000       74.494       2.2800         74.108   
+27            Aruba     2.2800       74.108       2.2080         73.011   
+28            Aruba     2.2080       73.011       2.1240         73.451   
+29            Aruba     2.1240       73.451          NaN            NaN   
+..              ...        ...          ...          ...            ...   
+600  United Kingdom     2.4900       70.420       2.8100         70.760   
+601  United Kingdom     2.8100       70.760       2.5200         71.360   
+602  United Kingdom     2.5200       71.360       2.0400         72.010   
+603  United Kingdom     2.0400       72.010       1.7200         72.760   
+604  United Kingdom     1.7200       72.760       1.8000         74.040   
+605  United Kingdom     1.8000       74.040       1.8100         75.007   
+606  United Kingdom     1.8100       75.007       1.7800         76.420   
+607  United Kingdom     1.7800       76.420       1.7000         77.218   
+608  United Kingdom     1.7000       77.218       1.6950         78.471   
+609  United Kingdom     1.6950       78.471          NaN            NaN   
+610   United States     3.7060       69.490       3.3140         70.210   
+611   United States     3.3140       70.210       2.5450         70.760   
+612   United States     2.5450       70.760       2.0160         71.340   
+613   United States     2.0160       71.340       1.7880         73.380   
+614   United States     1.7880       73.380       1.8250         74.650   
+615   United States     1.8250       74.650       1.9240         75.020   
+616   United States     1.9240       75.020       2.0250         76.090   
+617   United States     2.0250       76.090       1.9940         76.810   
+618   United States     1.9940       76.810       2.0380         77.310   
+619   United States     2.0380       77.310          NaN            NaN   
+620       Venezuela     6.4585       57.907       6.6570         60.770   
+621       Venezuela     6.6570       60.770       5.9045         63.479   
+622       Venezuela     5.9045       63.479       4.9410         65.712   
+623       Venezuela     4.9410       65.712       4.4685         67.456   
+624       Venezuela     4.4685       67.456       3.9570         68.557   
+625       Venezuela     3.9570       68.557       3.6485         70.190   
+626       Venezuela     3.6485       70.190       3.2500         71.150   
+627       Venezuela     3.2500       71.150       2.9415         72.146   
+628       Venezuela     2.9415       72.146       2.7230         72.766   
+629       Venezuela     2.7230       72.766          NaN            NaN   
+
+     p_fertility  p_life_expect  year  
+0            NaN            NaN  1955  
+1         7.7000         30.332  1960  
+2         7.7000         31.997  1965  
+3         7.7000         34.020  1970  
+4         7.7000         36.088  1975  
+5         7.7000         38.438  1980  
+6         7.8000         39.854  1985  
+7         7.9000         40.822  1990  
+8         8.0000         41.674  1995  
+9         8.0000         41.763  2000  
+10           NaN            NaN  1955  
+11        3.1265         64.399  1960  
+12        3.0895         65.142  1965  
+13        3.0490         65.634  1970  
+14        3.1455         67.065  1975  
+15        3.4400         68.481  1980  
+16        3.1500         69.942  1985  
+17        3.0530         70.774  1990  
+18        2.9000         71.868  1995  
+19        2.6300         73.275  2000  
+20           NaN            NaN  1955  
+21        5.1500         64.381  1960  
+22        4.3990         66.606  1965  
+23        3.3010         68.336  1970  
+24        2.6510         70.941  1975  
+25        2.4500         71.830  1980  
+26        2.3580         74.116  1985  
+27        2.3000         74.494  1990  
+28        2.2800         74.108  1995  
+29        2.2080         73.011  2000  
+..           ...            ...   ...  
+600          NaN            NaN  1955  
+601       2.4900         70.420  1960  
+602       2.8100         70.760  1965  
+603       2.5200         71.360  1970  
+604       2.0400         72.010  1975  
+605       1.7200         72.760  1980  
+606       1.8000         74.040  1985  
+607       1.8100         75.007  1990  
+608       1.7800         76.420  1995  
+609       1.7000         77.218  2000  
+610          NaN            NaN  1955  
+611       3.7060         69.490  1960  
+612       3.3140         70.210  1965  
+613       2.5450         70.760  1970  
+614       2.0160         71.340  1975  
+615       1.7880         73.380  1980  
+616       1.8250         74.650  1985  
+617       1.9240         75.020  1990  
+618       2.0250         76.090  1995  
+619       1.9940         76.810  2000  
+620          NaN            NaN  1955  
+621       6.4585         57.907  1960  
+622       6.6570         60.770  1965  
+623       5.9045         63.479  1970  
+624       4.9410         65.712  1975  
+625       4.4685         67.456  1980  
+626       3.9570         68.557  1985  
+627       3.6485         70.190  1990  
+628       3.2500         71.150  1995  
+629       2.9415         72.146  2000  
+
+[630 rows x 8 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+  .countries() \
+  .drop(['_comment'], axis = 1) \
+* .filter(['country', 'life_expect',
+*          'year'])
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+            country  life_expect  year
+0       Afghanistan       30.332  1955
+1       Afghanistan       31.997  1960
+2       Afghanistan       34.020  1965
+3       Afghanistan       36.088  1970
+4       Afghanistan       38.438  1975
+5       Afghanistan       39.854  1980
+6       Afghanistan       40.822  1985
+7       Afghanistan       41.674  1990
+8       Afghanistan       41.763  1995
+9       Afghanistan       42.129  2000
+10        Argentina       64.399  1955
+11        Argentina       65.142  1960
+12        Argentina       65.634  1965
+13        Argentina       67.065  1970
+14        Argentina       68.481  1975
+15        Argentina       69.942  1980
+16        Argentina       70.774  1985
+17        Argentina       71.868  1990
+18        Argentina       73.275  1995
+19        Argentina       74.340  2000
+20            Aruba       64.381  1955
+21            Aruba       66.606  1960
+22            Aruba       68.336  1965
+23            Aruba       70.941  1970
+24            Aruba       71.830  1975
+25            Aruba       74.116  1980
+26            Aruba       74.494  1985
+27            Aruba       74.108  1990
+28            Aruba       73.011  1995
+29            Aruba       73.451  2000
+..              ...          ...   ...
+600  United Kingdom       70.420  1955
+601  United Kingdom       70.760  1960
+602  United Kingdom       71.360  1965
+603  United Kingdom       72.010  1970
+604  United Kingdom       72.760  1975
+605  United Kingdom       74.040  1980
+606  United Kingdom       75.007  1985
+607  United Kingdom       76.420  1990
+608  United Kingdom       77.218  1995
+609  United Kingdom       78.471  2000
+610   United States       69.490  1955
+611   United States       70.210  1960
+612   United States       70.760  1965
+613   United States       71.340  1970
+614   United States       73.380  1975
+615   United States       74.650  1980
+616   United States       75.020  1985
+617   United States       76.090  1990
+618   United States       76.810  1995
+619   United States       77.310  2000
+620       Venezuela       57.907  1955
+621       Venezuela       60.770  1960
+622       Venezuela       63.479  1965
+623       Venezuela       65.712  1970
+624       Venezuela       67.456  1975
+625       Venezuela       68.557  1980
+626       Venezuela       70.190  1985
+627       Venezuela       71.150  1990
+628       Venezuela       72.146  1995
+629       Venezuela       72.766  2000
+
+[630 rows x 3 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+  .countries() \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect',
+           'year'])
+* # keep rows but can we do this in a pipe line?
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+            country  life_expect  year
+0       Afghanistan       30.332  1955
+1       Afghanistan       31.997  1960
+2       Afghanistan       34.020  1965
+3       Afghanistan       36.088  1970
+4       Afghanistan       38.438  1975
+5       Afghanistan       39.854  1980
+6       Afghanistan       40.822  1985
+7       Afghanistan       41.674  1990
+8       Afghanistan       41.763  1995
+9       Afghanistan       42.129  2000
+10        Argentina       64.399  1955
+11        Argentina       65.142  1960
+12        Argentina       65.634  1965
+13        Argentina       67.065  1970
+14        Argentina       68.481  1975
+15        Argentina       69.942  1980
+16        Argentina       70.774  1985
+17        Argentina       71.868  1990
+18        Argentina       73.275  1995
+19        Argentina       74.340  2000
+20            Aruba       64.381  1955
+21            Aruba       66.606  1960
+22            Aruba       68.336  1965
+23            Aruba       70.941  1970
+24            Aruba       71.830  1975
+25            Aruba       74.116  1980
+26            Aruba       74.494  1985
+27            Aruba       74.108  1990
+28            Aruba       73.011  1995
+29            Aruba       73.451  2000
+..              ...          ...   ...
+600  United Kingdom       70.420  1955
+601  United Kingdom       70.760  1960
+602  United Kingdom       71.360  1965
+603  United Kingdom       72.010  1970
+604  United Kingdom       72.760  1975
+605  United Kingdom       74.040  1980
+606  United Kingdom       75.007  1985
+607  United Kingdom       76.420  1990
+608  United Kingdom       77.218  1995
+609  United Kingdom       78.471  2000
+610   United States       69.490  1955
+611   United States       70.210  1960
+612   United States       70.760  1965
+613   United States       71.340  1970
+614   United States       73.380  1975
+615   United States       74.650  1980
+616   United States       75.020  1985
+617   United States       76.090  1990
+618   United States       76.810  1995
+619   United States       77.310  2000
+620       Venezuela       57.907  1955
+621       Venezuela       60.770  1960
+622       Venezuela       63.479  1965
+623       Venezuela       65.712  1970
+624       Venezuela       67.456  1975
+625       Venezuela       68.557  1980
+626       Venezuela       70.190  1985
+627       Venezuela       71.150  1990
+628       Venezuela       72.146  1995
+629       Venezuela       72.766  2000
+
+[630 rows x 3 columns]
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+  .countries() \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect',
+           'year'])
+  # keep rows but can we do this in a pipe line?
+*gm = gm[gm.country.isin(['United States',
+*                        'Canada'])]
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+           country  life_expect  year
+110         Canada        69.96  1955
+111         Canada        71.30  1960
+112         Canada        72.13  1965
+113         Canada        72.88  1970
+114         Canada        74.21  1975
+115         Canada        75.76  1980
+116         Canada        76.86  1985
+117         Canada        77.95  1990
+118         Canada        78.61  1995
+119         Canada        79.77  2000
+610  United States        69.49  1955
+611  United States        70.21  1960
+612  United States        70.76  1965
+613  United States        71.34  1970
+614  United States        73.38  1975
+615  United States        74.65  1980
+616  United States        75.02  1985
+617  United States        76.09  1990
+618  United States        76.81  1995
+619  United States        77.31  2000
+```
+]
+
+---
+count: false
+ 
+
+.panel1-pipe-auto[
+
+```python
+gm = data \
+  .countries() \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect',
+           'year'])
+  # keep rows but can we do this in a pipe line?
+gm = gm[gm.country.isin(['United States',
+                         'Canada'])] \
+* .reset_index(drop=True)
+
+gm
+```
+]
+ 
+.panel2-pipe-auto[
+
+```
+          country  life_expect  year
+0          Canada        69.96  1955
+1          Canada        71.30  1960
+2          Canada        72.13  1965
+3          Canada        72.88  1970
+4          Canada        74.21  1975
+5          Canada        75.76  1980
+6          Canada        76.86  1985
+7          Canada        77.95  1990
+8          Canada        78.61  1995
+9          Canada        79.77  2000
+10  United States        69.49  1955
+11  United States        70.21  1960
+12  United States        70.76  1965
+13  United States        71.34  1970
+14  United States        73.38  1975
+15  United States        74.65  1980
+16  United States        75.02  1985
+17  United States        76.09  1990
+18  United States        76.81  1995
+19  United States        77.31  2000
+```
+]
+
+&lt;style&gt;
+.panel1-pipe-auto {
+  color: black;
+  width: 38.6060606060606%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-pipe-auto {
+  color: black;
+  width: 59.3939393939394%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-pipe-auto {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+count: false
+ 
+
+.panel1-plotting-auto[
+
+```python
+*import matplotlib.pyplot as plt
+```
+]
+ 
+.panel2-plotting-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-plotting-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+*fig, ax = plt.subplots(figsize = (10,7))
+```
+]
+ 
+.panel2-plotting-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-plotting-auto[
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+
+*plt.scatter(x = gm.year,
+*           y = gm.life_expect)
+```
+]
+ 
+.panel2-plotting-auto[
+&lt;img src="one_stream_files/figure-html/plotting_auto_03_output-1.png" width="960" /&gt;
+]
+
+&lt;style&gt;
+.panel1-plotting-auto {
+  color: black;
+  width: 38.6060606060606%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plotting-auto {
+  color: black;
+  width: 59.3939393939394%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plotting-auto {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.remark-code{line-height: 1.5; font-size: 80%}
+&lt;/style&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

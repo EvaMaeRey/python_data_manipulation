@@ -1,0 +1,116 @@
+---
+title: "two stream data manipulation"
+subtitle: "With pandas, numpy, matplotlib"
+author: "Reynolds py movies lab, May 2020"
+output:
+  xaringan::moon_reader:
+    seal: FALSE
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+
+class: left, top, inverse
+background-image: url(https://images.unsplash.com/photo-1485909473307-a4b49634c861?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80)
+background-size: cover
+
+# .Large[py two-stream manipulation, joins]
+### Reynolds py movies lab
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+#### <br>Photo Credit: Daniel Mingook Kim
+
+
+
+Flipbooks present data manipulation and analysis code dynamically with output, a strategy that should deliver insights about how to get things done in coded workflows.  
+
+The {flipbookr} python initiative was founded in the Spring of 2020 and is lead by Dr. Evangeline Reynolds.  Lab members and contributing authors include Suraj Thapa, Rachel Goodman, and Lucca Picci (in order of affiliation).  
+
+---
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
+                      comment = "", cache = F, fig.retina = 3, eval = T)
+library(flipbookr)
+library(reticulate)
+```
+
+
+
+
+---
+
+`r chunk_reveal("merges", lang = "python", omit = "#ROTATE", widths = c(1,1))`
+
+---
+
+`r chunk_reveal("merges", lang = "python", break_type = "rotate", widths = c(1,1))`
+
+
+```{python merges, include = F}
+# left data
+
+life = pd.DataFrame(
+{"country": ["NY", "CO", "IL", "MI"],
+"life_exp": [76, 77, 76, 20]
+})
+
+life
+
+# right data
+
+weights = pd.DataFrame(
+{"country": ["NY", "CO", "WA"],
+"av_wt_male": [170, 178, 154],
+"av_wt_female": [150, 150, 140]
+})
+
+weights
+
+####### Now the Merge ####
+"-------------------------------"
+"Merging life and weights:"
+"-------------------------------"
+
+pd.merge(life, weights, how = 'outer', indicator = True) #ROTATE
+pd.merge(life, weights, how = 'outer') #ROTATE
+pd.merge(life, weights, how = 'outer', sort = True) #ROTATE
+pd.merge(life, weights, how = 'left', indicator = True) #ROTATE
+pd.merge(life, weights, how = 'left') #ROTATE
+pd.merge(life, weights, how = 'left', sort = True) #ROTATE
+pd.merge(life, weights, how = 'right', indicator = True) #ROTATE
+pd.merge(life, weights, how = 'right') #ROTATE
+pd.merge(life, weights, how = 'right', sort = True) #ROTATE
+pd.merge(life, weights, how = 'inner', indicator = True) #ROTATE
+pd.merge(life, weights, how = 'inner') #ROTATE
+pd.merge(life, weights, how = 'inner', sort = True) #ROTATE
+pd.merge(life, weights, indicator = True) #ROTATE
+pd.merge(life, weights) #ROTATE
+```
+
+
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+```

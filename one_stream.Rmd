@@ -1,0 +1,147 @@
+---
+title: "An introduction data analysis python"
+subtitle: "With pandas, numpy, matplotlib"
+author: "Reynolds py movies lab"
+output:
+  xaringan::moon_reader:
+    seal: FALSE
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+
+class: left, top, inverse
+background-image: url(https://images.unsplash.com/photo-1476610182048-b716b8518aae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1127&q=80)
+background-size: cover
+
+# .Large[py one-stream <br>data frame manipulation]
+### Reynolds py movies lab
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+#### <br>Photo Credit: Robert Lukeman
+
+---
+
+
+
+
+
+### Flipbooks present data manipulation and analysis code dynamically with output, a strategy that should deliver insights about how to get things done in coded data analysis workflows.  
+
+--
+
+### The {flipbookr} python initiative began in the Spring of 2020 and is lead by Dr. Evangeline Reynolds.  Lab members and contributing authors in order of affiliation are Suraj Thapa, Rachel Goodman, and Lucca Picci.  
+
+---
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, 
+                      comment = "", cache = F, fig.retina = 3, eval = T)
+library(flipbookr)
+library(reticulate)
+```
+
+---
+
+```{python import_packages}
+import pandas as pd
+from vega_datasets import data
+import matplotlib.pylab as plt
+```
+
+
+---
+
+`r chunk_reveal("hans", lang = "python", left_assign=TRUE)`
+
+```{python hans, include = F}
+gap_2000 = data \
+  .countries()  \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect', 
+           'year', 'fertility'])
+
+gap_2000 = gap_2000[gap_2000.year.eq(2000)]
+```           
+
+
+---
+
+
+`r chunk_reveal("plotting1", lang = "python")`
+
+```{python plotting1, include = F}
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+plt.scatter(x = gap_2000.life_expect, 
+            y = gap_2000.fertility)
+
+ax. set_title('Life expectancy and fertility are strongly negatively correlated',  
+    fontsize='x-large') 
+ax.set_xlabel('life expectancy (years)',
+    fontsize='x-large')
+ax.set_xlabel('fertility (average number of children)',
+    fontsize='x-large')
+```
+
+
+
+
+---
+
+`r chunk_reveal("pipe", lang = "python", left_assign=TRUE)`
+
+```{python pipe, include = F}
+gm = data \
+  .countries() \
+  .drop(['_comment'], axis = 1) \
+  .filter(['country', 'life_expect', 
+           'year'])
+  # keep rows but can we do this in a pipe line?
+gm = gm[gm.country.isin(['United States',
+                         'Canada'])] \
+  .reset_index(drop=True)
+```
+
+
+---
+
+`r chunk_reveal("plotting", lang = "python")`
+
+```{python plotting, include = F}
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize = (10,7))
+
+plt.scatter(x = gm.year, 
+            y = gm.life_expect)
+```
+
+
+
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+```
