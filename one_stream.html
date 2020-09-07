@@ -79,7 +79,7 @@ gap_2000
 .panel2-hans-auto[
 
 ```
-&lt;vega_datasets.core.DataLoader object at 0x11647c550&gt;
+&lt;vega_datasets.core.DataLoader object at 0x113412668&gt;
 ```
 ]
 
@@ -238,7 +238,7 @@ count: false
 
 ```python
 gap_2000 = data \
-  .countries()  \
+  .countries() \
 * .drop(['_comment'], axis = 1)
 
 gap_2000
@@ -386,7 +386,7 @@ count: false
 
 ```python
 gap_2000 = data \
-  .countries()  \
+  .countries() \
   .drop(['_comment'], axis = 1) \
 * .filter(['country', 'life_expect',
 *          'year', 'fertility'])
@@ -473,12 +473,12 @@ count: false
 
 ```python
 gap_2000 = data \
-  .countries()  \
+  .countries() \
   .drop(['_comment'], axis = 1) \
   .filter(['country', 'life_expect',
            'year', 'fertility'])
 
-*gap_2000 = gap_2000[gap_2000.year.eq(2000)]
+*gap_2000 = gap_2000[gap_2000.year == 2000]
 
 gap_2000
 ```
@@ -558,6 +558,7 @@ gap_2000
 .panel1-hans-auto {
   color: black;
   width: 38.6060606060606%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -565,6 +566,7 @@ gap_2000
 .panel2-hans-auto {
   color: black;
   width: 59.3939393939394%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -572,11 +574,14 @@ gap_2000
 .panel3-hans-auto {
   color: black;
   width: NA%;
+  hight: 33%;
   float: left;
   padding-left: 1%;
   font-size: 80%
 }
 &lt;/style&gt;
+
+
 
 
 
@@ -699,22 +704,20 @@ ax. set_title('Life expectancy and fertility are strongly negatively correlated'
     fontsize='x-large')
 ax.set_xlabel('life expectancy (years)',
     fontsize='x-large')
-*ax.set_xlabel('fertility (average number of children)',
+*ax.set_ylabel('fertility (average number of children)',
 *   fontsize='x-large')
 ```
 ]
  
 .panel2-plotting1-auto[
-
-```
-Text(0.5,0,'fertility (average number of children)')
-```
+&lt;img src="one_stream_files/figure-html/plotting1_auto_06_output-1.png" width="960" /&gt;
 ]
 
 &lt;style&gt;
 .panel1-plotting1-auto {
   color: black;
   width: 38.6060606060606%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -722,6 +725,7 @@ Text(0.5,0,'fertility (average number of children)')
 .panel2-plotting1-auto {
   color: black;
   width: 59.3939393939394%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -729,6 +733,7 @@ Text(0.5,0,'fertility (average number of children)')
 .panel3-plotting1-auto {
   color: black;
   width: NA%;
+  hight: 33%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -759,7 +764,7 @@ gm
 .panel2-pipe-auto[
 
 ```
-&lt;vega_datasets.core.DataLoader object at 0x11647c550&gt;
+&lt;vega_datasets.core.DataLoader object at 0x113412668&gt;
 ```
 ]
 
@@ -1332,6 +1337,7 @@ gm
 .panel1-pipe-auto {
   color: black;
   width: 38.6060606060606%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -1339,6 +1345,7 @@ gm
 .panel2-pipe-auto {
   color: black;
   width: 59.3939393939394%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -1346,6 +1353,7 @@ gm
 .panel3-pipe-auto {
   color: black;
   width: NA%;
+  hight: 33%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -1414,6 +1422,7 @@ fig, ax = plt.subplots(figsize = (10,7))
 .panel1-plotting-auto {
   color: black;
   width: 38.6060606060606%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -1421,6 +1430,7 @@ fig, ax = plt.subplots(figsize = (10,7))
 .panel2-plotting-auto {
   color: black;
   width: 59.3939393939394%;
+  hight: 32%;
   float: left;
   padding-left: 1%;
   font-size: 80%
@@ -1428,6 +1438,7 @@ fig, ax = plt.subplots(figsize = (10,7))
 .panel3-plotting-auto {
   color: black;
   width: NA%;
+  hight: 33%;
   float: left;
   padding-left: 1%;
   font-size: 80%

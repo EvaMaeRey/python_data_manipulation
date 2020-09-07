@@ -76,13 +76,15 @@ import matplotlib.pylab as plt
 
 ```{python hans, include = F}
 gap_2000 = data \
-  .countries()  \
+  .countries() \
   .drop(['_comment'], axis = 1) \
   .filter(['country', 'life_expect', 
            'year', 'fertility'])
 
-gap_2000 = gap_2000[gap_2000.year.eq(2000)]
+gap_2000 = gap_2000[gap_2000.year == 2000]
 ```           
+
+
 
 
 ---
@@ -101,8 +103,8 @@ ax. set_title('Life expectancy and fertility are strongly negatively correlated'
     fontsize='x-large') 
 ax.set_xlabel('life expectancy (years)',
     fontsize='x-large')
-ax.set_xlabel('fertility (average number of children)',
-    fontsize='x-large')
+ax.set_ylabel('fertility (average number of children)',
+    fontsize='x-large') 
 ```
 
 
